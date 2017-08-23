@@ -11,6 +11,8 @@ addSbtPlugin("com.github.xuwei-k" % "sbt-conflict-classes" % "0.1.0")
 ```scala
 // build.sbt
 
+enablePlugins(ConflictClassesPlugin)
+
 // Exclude from conflict detection(match with startsWith)(Optional)
 conflictClassExcludes ++= Seq(
   "com/example/DuplicateClass.class",
