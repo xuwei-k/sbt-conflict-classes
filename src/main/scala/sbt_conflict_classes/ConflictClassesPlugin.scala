@@ -15,8 +15,8 @@ case class Classpath(asFile: File) {
     import scala.collection.JavaConverters._
     root.listFiles().flatMap { f =>
       f match {
-        case f if (f.isFile) => Seq(Resource((prefix :+ f.getName).mkString("/")))
-        case f if (f.isDirectory) => listFromDirectory(f, prefix :+ f.getName)
+        case f if f.isFile => Seq(Resource((prefix :+ f.getName).mkString("/")))
+        case f if f.isDirectory => listFromDirectory(f, prefix :+ f.getName)
       }
     }
   }
