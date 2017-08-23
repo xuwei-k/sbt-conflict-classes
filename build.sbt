@@ -1,5 +1,3 @@
-version := "0.0.3-SNAPSHOT"
-
 organization := "com.github.xuwei-k"
 
 name := "sbt-conflict-classes"
@@ -9,3 +7,68 @@ sbtPlugin := true
 scalacOptions ++= Seq("-deprecation", "-unchecked")
 
 crossSbtVersions := Seq("0.13.16", "1.0.0")
+
+val tagName = Def.setting {
+  s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
+}
+val tagOrHash = Def.setting {
+  if (isSnapshot.value)
+    sys.process.Process("git rev-parse HEAD").lines_!.head
+  else
+    tagName.value
+}
+
+releaseTagName := tagName.value
+
+scalacOptions in (Compile, doc) ++= {
+  val tag = tagOrHash.value
+  Seq(
+    "-sourcepath",
+    (baseDirectory in LocalRootProject).value.getAbsolutePath,
+    "-doc-source-url",
+    s"https://github.com/xuwei-k/sbt-conflict-classes/tree/${tag}€{FILE_PATH}.scala"
+  )
+}
+
+licenses := Seq("MIT" -> url("https://github.com/xuwei-k/sbt-conflict-classes/blob/master/LICENSE"))
+
+homepage := Some(url("https://github.com/xuwei-k/sbt-conflict-classes"))
+
+pomExtra := (
+  <developers>
+  <developer>
+    <id>xuwei-k</id>
+    <name>Kenji Yoshida</name>
+    <url>https://github.com/xuwei-k</url>
+  </developer>
+</developers>
+<scm>
+  <url>git@github.com:xuwei-k/sbt-conflict-classes.git</url>
+  <connection>scm:git:git@github.com:xuwei-k/sbt-conflict-classes.git</connection>
+  <tag>{tagOrHash.value}</tag>
+</scm>
+)
+
+import ReleaseTransformations._
+
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  releaseStepCommandAndRemaining("^ test"),
+  releaseStepCommandAndRemaining("^ scripted"),
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  releaseStepCommandAndRemaining("^ publishSigned"),
+  setNextVersion,
+  commitNextVersion,
+  pushChanges
+)
+
+publishTo := Some(
+  if (isSnapshot.value)
+    Opts.resolver.sonatypeSnapshots
+  else
+    Opts.resolver.sonatypeStaging
+)
