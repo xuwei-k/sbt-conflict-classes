@@ -93,6 +93,6 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
         }
       }
 
-    cpsToResources.filter { case (cps, _) => cps.size > 1 }.map { case (cps, resources) => Conflict(resources, cps) }.toSeq
+    cpsToResources.collect { case (cps, resources) if cps.size > 1 => Conflict(resources, cps) }.toSeq
   }
 }
