@@ -1,4 +1,4 @@
-package com.todesking.sbt_conflict_classes
+package sbt_conflict_classes
 
 import java.io.File
 

@@ -1,5 +1,5 @@
 import sbt._
-import com.todesking.sbt_conflict_classes.{Conflict, ConflictClassesPlugin, Resource}
+import sbt_conflict_classes._
 
 object check {
 
