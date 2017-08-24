@@ -13,11 +13,9 @@ case class Classpath(asFile: File) {
 
   private[this] def listFromDirectory(root: File, prefix: Seq[String] = Seq()): Seq[Resource] = {
     import scala.collection.JavaConverters._
-    root.listFiles().flatMap { f =>
-      f match {
-        case f if f.isFile => Seq(Resource((prefix :+ f.getName).mkString("/")))
-        case f if f.isDirectory => listFromDirectory(f, prefix :+ f.getName)
-      }
+    root.listFiles().flatMap {
+      case f if f.isFile => Seq(Resource((prefix :+ f.getName).mkString("/")))
+      case f if f.isDirectory => listFromDirectory(f, prefix :+ f.getName)
     }
   }
 
@@ -85,12 +83,10 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
       }
 
     val cpsToResources: Map[Set[Classpath], Set[Resource]] =
-      resourceToCps.foldLeft(Map[Set[Classpath], Set[Resource]]()) { (map, kv) =>
-        kv match {
-          case (res, cps) =>
-            val cpSet = cps.toSet
-            map + (cpSet -> (map.getOrElse(cpSet, Set()) + res))
-        }
+      resourceToCps.foldLeft(Map[Set[Classpath], Set[Resource]]()) {
+        case (map, (res, cps)) =>
+          val cpSet = cps.toSet
+          map + (cpSet -> (map.getOrElse(cpSet, Set()) + res))
       }
 
     cpsToResources.collect { case (cps, resources) if cps.size > 1 => Conflict(resources, cps) }.toSeq
