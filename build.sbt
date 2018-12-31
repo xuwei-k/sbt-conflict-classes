@@ -6,7 +6,7 @@ sbtPlugin := true
 
 scalacOptions ++= Seq("-deprecation", "-unchecked")
 
-crossSbtVersions := Seq("0.13.17", "1.0.4")
+crossSbtVersions := Seq("0.13.18", "1.0.4")
 
 val tagName = Def.setting {
   s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
