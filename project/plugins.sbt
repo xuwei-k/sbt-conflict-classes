@@ -1,6 +1,6 @@
-scalacOptions ++= Seq("-deprecation", "-Xlint", "-unchecked", "-language:_")
+scalacOptions ++= Seq("-deprecation", "-unchecked", "-language:_")
 
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.1")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.2")
 addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.11")
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.3")
-addSbtPlugin("com.lucidchart" % "sbt-scalafmt" % "1.16")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.6")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.0.4")

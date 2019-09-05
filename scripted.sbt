@@ -1,4 +1,4 @@
-ScriptedPlugin.scriptedSettings
+enablePlugins(SbtPlugin)
 
 val javaVmArgs: List[String] = {
   import scala.collection.JavaConverters._

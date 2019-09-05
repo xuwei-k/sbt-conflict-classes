@@ -2,18 +2,16 @@ organization := "com.github.xuwei-k"
 
 name := "sbt-conflict-classes"
 
-sbtPlugin := true
-
 scalacOptions ++= Seq("-deprecation", "-unchecked")
 
-crossSbtVersions := Seq("0.13.18", "1.0.4")
+crossSbtVersions += "0.13.18"
 
 val tagName = Def.setting {
   s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
 }
 val tagOrHash = Def.setting {
   if (isSnapshot.value)
-    sys.process.Process("git rev-parse HEAD").lines_!.head
+    sys.process.Process("git rev-parse HEAD").lineStream_!.head
   else
     tagName.value
 }

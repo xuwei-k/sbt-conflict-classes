@@ -36,7 +36,8 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
     val conflictClasses = TaskKey[Seq[Conflict]]("conflict-classes", "Show conflict classes in classpath")
     val conflictClassExcludes = TaskKey[Seq[String]](
       "conflict-class-excludes",
-      "Exclude pattern for conflict checking. Check is done by `path startWith pattern`.")
+      "Exclude pattern for conflict checking. Check is done by `path startWith pattern`."
+    )
   }
 
   import autoImport._
@@ -52,11 +53,13 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
         conflictClasses := {
           val conflicts = buildConflicts(
             (Keys.dependencyClasspath in config).value.map(cp => Classpath(cp.data)),
-            conflictClassExcludes.value)
+            conflictClassExcludes.value
+          )
           printConflicts(Keys.streams.value.log, conflicts)
           conflicts
         }
-      ))
+      )
+    )
 
   def printConflicts(log: Logger, conflicts: Seq[Conflict]): Unit = {
     log.info("Listing conflict classes:")
