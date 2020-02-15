@@ -21,9 +21,7 @@ case class Classpath(asFile: File) {
 
   private[this] def listFromJar(file: File) = {
     import scala.collection.JavaConverters._
-    new java.util.jar.JarFile(file).entries.asScala.map { e =>
-      Resource(e.getName)
-    }.toSeq
+    new java.util.jar.JarFile(file).entries.asScala.map { e => Resource(e.getName) }.toSeq
   }
 }
 case class Resource(name: String)
@@ -65,24 +63,17 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
     log.info("Listing conflict classes:")
     conflicts.foreach { conflict: Conflict =>
       log.info("Found conflict classes in:")
-      conflict.classpathes.toSeq.sortBy(_.asFile.name).foreach { jar =>
-        log.info("    " + jar.asFile.getPath)
-      }
+      conflict.classpathes.toSeq.sortBy(_.asFile.name).foreach { jar => log.info("    " + jar.asFile.getPath) }
       log.info("  with classes:")
-      conflict.resources.toSeq.sortBy(_.name).foreach { entry =>
-        log.info("    " + entry.name)
-      }
+      conflict.resources.toSeq.sortBy(_.name).foreach { entry => log.info("    " + entry.name) }
     }
   }
 
   def buildConflicts(cps: Seq[Classpath], excludes: Seq[String]): Seq[Conflict] = {
     val resourceToCps: Map[Resource, Seq[Classpath]] =
       cps.foldLeft(Map[Resource, Seq[Classpath]]()) { (map, cp) =>
-        cp.listResources.filter { res =>
-          !res.name.endsWith("/") && !excludes.exists(ex => res.name.startsWith(ex))
-        }.foldLeft(map) { (map, res) =>
-          map + (res -> (map.getOrElse(res, Seq()) :+ cp))
-        }
+        cp.listResources.filter { res => !res.name.endsWith("/") && !excludes.exists(ex => res.name.startsWith(ex)) }
+          .foldLeft(map) { (map, res) => map + (res -> (map.getOrElse(res, Seq()) :+ cp)) }
       }
 
     val cpsToResources: Map[Set[Classpath], Set[Resource]] =
