@@ -77,10 +77,9 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
       }
 
     val cpsToResources: Map[Set[Classpath], Set[Resource]] =
-      resourceToCps.foldLeft(Map[Set[Classpath], Set[Resource]]()) {
-        case (map, (res, cps)) =>
-          val cpSet = cps.toSet
-          map + (cpSet -> (map.getOrElse(cpSet, Set()) + res))
+      resourceToCps.foldLeft(Map[Set[Classpath], Set[Resource]]()) { case (map, (res, cps)) =>
+        val cpSet = cps.toSet
+        map + (cpSet -> (map.getOrElse(cpSet, Set()) + res))
       }
 
     cpsToResources.collect { case (cps, resources) if cps.size > 1 => Conflict(resources, cps) }.toSeq
