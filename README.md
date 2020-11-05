@@ -1,4 +1,4 @@
-# sbt-conflict-classes: List conflict classes in classpath  [![Build Status](https://travis-ci.com/xuwei-k/sbt-conflict-classes.png?branch=master)](http://travis-ci.com/xuwei-k/sbt-conflict-classes)
+# sbt-conflict-classes: List conflict classes in classpath
 
 
 ## Usage
