@@ -2,6 +2,9 @@ organization := "com.github.xuwei-k"
 
 name := "sbt-conflict-classes"
 
+// https://github.com/sbt/sbt/issues/6090
+scriptedBatchExecution := CrossVersionUtil.binarySbtVersion(scriptedSbt.value) != "0.13"
+
 scalacOptions ++= Seq("-deprecation", "-unchecked")
 
 // Don't update to sbt 1.3.x
