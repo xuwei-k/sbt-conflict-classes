@@ -22,9 +22,7 @@ object check {
   val setting = TaskKey[Unit]("check") := {
     (ConflictClassesPlugin.autoImport.conflictClasses in Compile).value match {
       case Seq(conflict) =>
-        assert(
-          conflict.resources == expectResources,
-          conflict.resources + " is not equals " + expectResources.toString)
+        assert(conflict.resources == expectResources, conflict.resources + " is not equals " + expectResources.toString)
         val classpath = conflict.classpathes.map(_.asFile.getName)
         assert(classpath == expectClasspath, classpath + " is not equals " + expectClasspath.toString)
       case other =>
