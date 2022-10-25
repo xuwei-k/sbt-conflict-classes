@@ -21,7 +21,7 @@ conflictClassExcludes ++= Seq(
 ```
 
 ```
-$ sbt compile:conflictClasses # show compile-time conflicts
-$ sbt test:conflictClasses    # show test-time conflicts
-$ sbt runtime:conflictClasses # show runtime conflicts
+$ sbt Compile/conflictClasses # show compile-time conflicts
+$ sbt Test/conflictClasses    # show test-time conflicts
+$ sbt Runtime/conflictClasses # show runtime conflicts
 ```
