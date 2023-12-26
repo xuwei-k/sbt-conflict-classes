@@ -20,7 +20,7 @@ object check {
   )
 
   val setting = TaskKey[Unit]("check") := {
-    (ConflictClassesPlugin.autoImport.conflictClasses in Compile).value match {
+    (Compile / ConflictClassesPlugin.autoImport.conflictClasses).value match {
       case Seq(conflict) =>
         assert(conflict.resources == expectResources, conflict.resources + " is not equals " + expectResources.toString)
         val classpath = conflict.classpathes.map(_.asFile.getName)

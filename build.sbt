@@ -8,7 +8,7 @@ scriptedBatchExecution := false
 scalacOptions ++= Seq("-deprecation", "-unchecked")
 
 val tagName = Def.setting {
-  s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
+  s"v${if (releaseUseGlobalVersion.value) (ThisBuild / version).value else version.value}"
 }
 val tagOrHash = Def.setting {
   if (isSnapshot.value)
@@ -19,11 +19,11 @@ val tagOrHash = Def.setting {
 
 releaseTagName := tagName.value
 
-scalacOptions in (Compile, doc) ++= {
+Compile / doc / scalacOptions ++= {
   val tag = tagOrHash.value
   Seq(
     "-sourcepath",
-    (baseDirectory in LocalRootProject).value.getAbsolutePath,
+    (LocalRootProject / baseDirectory).value.getAbsolutePath,
     "-doc-source-url",
     s"https://github.com/xuwei-k/sbt-conflict-classes/tree/${tag}€{FILE_PATH}.scala"
   )
