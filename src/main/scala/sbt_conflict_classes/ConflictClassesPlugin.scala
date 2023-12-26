@@ -50,7 +50,7 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
       Seq(
         conflictClasses := {
           val conflicts = buildConflicts(
-            (Keys.dependencyClasspath in config).value.map(cp => Classpath(cp.data)),
+            (config / Keys.dependencyClasspath).value.map(cp => Classpath(cp.data)),
             conflictClassExcludes.value
           )
           printConflicts(Keys.streams.value.log, conflicts)
