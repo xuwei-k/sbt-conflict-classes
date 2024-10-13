@@ -61,7 +61,7 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
 
   def printConflicts(log: Logger, conflicts: Seq[Conflict]): Unit = {
     log.info("Listing conflict classes:")
-    conflicts.foreach { conflict: Conflict =>
+    conflicts.foreach { (conflict: Conflict) =>
       log.info("Found conflict classes in:")
       conflict.classpathes.toSeq.sortBy(_.asFile.name).foreach { jar => log.info("    " + jar.asFile.getPath) }
       log.info("  with classes:")
