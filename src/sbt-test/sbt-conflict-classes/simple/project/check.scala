@@ -19,12 +19,12 @@ object check {
     "commons-collections-3.2.1.jar"
   )
 
-  val setting = TaskKey[Unit]("check") := {
+  val setting = InputKey[Unit]("check") := {
     (Compile / ConflictClassesPlugin.autoImport.conflictClasses).value match {
       case Seq(conflict) =>
-        assert(conflict.resources == expectResources, conflict.resources + " is not equals " + expectResources.toString)
+        assert(conflict.resources == expectResources, s"${conflict.resources} is not equals ${expectResources}")
         val classpath = conflict.classpathes.map(_.asFile.getName)
-        assert(classpath == expectClasspath, classpath + " is not equals " + expectClasspath.toString)
+        assert(classpath == expectClasspath, s"${classpath} is not equals ${expectClasspath}")
       case other =>
         assert(false, other)
     }
