@@ -62,13 +62,8 @@ releaseProcess := Seq[ReleaseStep](
   releaseStepCommandAndRemaining("^ publishSigned"),
   setNextVersion,
   commitNextVersion,
-  releaseStepCommand("sonatypeReleaseAll"),
+  releaseStepCommand("sonaRelease"),
   pushChanges
 )
 
-publishTo := (
-  if (isSnapshot.value)
-    None
-  else
-    Some(Opts.resolver.sonatypeStaging)
-)
+publishTo := (if (isSnapshot.value) None else localStaging.value)
