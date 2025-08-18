@@ -11,7 +11,7 @@ case class Classpath(asFile: File) {
     }
   }
 
-  private[this] def listFromDirectory(root: File, prefix: Seq[String] = Seq()): Seq[Resource] = {
+  private def listFromDirectory(root: File, prefix: Seq[String] = Seq()): Seq[Resource] = {
     import scala.collection.JavaConverters._
     root.listFiles().flatMap {
       case f if f.isFile      => Seq(Resource((prefix :+ f.getName).mkString("/")))
@@ -19,7 +19,7 @@ case class Classpath(asFile: File) {
     }
   }
 
-  private[this] def listFromJar(file: File) = {
+  private def listFromJar(file: File) = {
     import scala.collection.JavaConverters._
     new java.util.jar.JarFile(file).entries.asScala.map { e => Resource(e.getName) }.toSeq
   }
