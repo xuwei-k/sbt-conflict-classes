@@ -54,12 +54,12 @@ releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
-  releaseStepCommandAndRemaining("^ test"),
-  releaseStepCommandAndRemaining("^ scripted"),
+  releaseStepCommandAndRemaining("+ test"),
+  releaseStepCommandAndRemaining("+ scripted"),
   setReleaseVersion,
   commitReleaseVersion,
   tagRelease,
-  releaseStepCommandAndRemaining("^ publishSigned"),
+  releaseStepCommandAndRemaining("+ publishSigned"),
   setNextVersion,
   commitNextVersion,
   releaseStepCommand("sonaRelease"),
@@ -67,3 +67,14 @@ releaseProcess := Seq[ReleaseStep](
 )
 
 publishTo := (if (isSnapshot.value) None else localStaging.value)
+
+pluginCrossBuild / sbtVersion := {
+  scalaBinaryVersion.value match {
+    case "2.12" =>
+      (pluginCrossBuild / sbtVersion).value
+    case _ =>
+      "2.0.0-RC3"
+  }
+}
+
+crossScalaVersions += "3.7.2"

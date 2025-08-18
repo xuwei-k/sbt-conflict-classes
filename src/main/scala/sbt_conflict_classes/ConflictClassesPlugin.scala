@@ -1,5 +1,7 @@
 package sbt_conflict_classes
 
+import sbt_conflict_classes.ConflictClassesPluginCompat.*
+
 object ConflictClassesPlugin extends sbt.AutoPlugin {
   import sbt._
 
@@ -21,9 +23,10 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
   def forConfig(config: Configuration) =
     inConfig(config)(
       Seq(
-        conflictClasses := {
+        conflictClasses := Def.uncached {
           val conflicts = buildConflicts(
-            (config / Keys.dependencyClasspath).value.map(cp => Classpath(cp.data)),
+            (config / Keys.dependencyClasspath).value
+              .map(cp => Classpath(ConflictClassesPluginCompat.toFile(cp.data, Keys.fileConverter.value))),
             conflictClassExcludes.value
           )
           printConflicts(Keys.streams.value.log, conflicts)
@@ -45,7 +48,8 @@ object ConflictClassesPlugin extends sbt.AutoPlugin {
   def buildConflicts(cps: Seq[Classpath], excludes: Seq[String]): Seq[Conflict] = {
     val resourceToCps: Map[Resource, Seq[Classpath]] =
       cps.foldLeft(Map[Resource, Seq[Classpath]]()) { (map, cp) =>
-        cp.listResources.filter { res => !res.name.endsWith("/") && !excludes.exists(ex => res.name.startsWith(ex)) }
+        cp.listResources()
+          .filter { res => !res.name.endsWith("/") && !excludes.exists(ex => res.name.startsWith(ex)) }
           .foldLeft(map) { (map, res) => map + (res -> (map.getOrElse(res, Seq()) :+ cp)) }
       }
 
