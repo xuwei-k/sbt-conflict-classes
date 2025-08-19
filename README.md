@@ -5,7 +5,7 @@
 
 ```scala
 // project/plugins.sbt
-addSbtPlugin("com.github.xuwei-k" % "sbt-conflict-classes" % "0.1.1")
+addSbtPlugin("com.github.xuwei-k" % "sbt-conflict-classes" % "0.1.2")
 ```
 
 ```scala
