@@ -77,4 +77,4 @@ pluginCrossBuild / sbtVersion := {
   }
 }
 
-crossScalaVersions += "3.7.3"
+crossScalaVersions += "3.7.4"
