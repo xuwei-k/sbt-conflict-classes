@@ -1,4 +1,4 @@
-def sbt2 = "2.0.0-RC12"
+def sbt1 = "1.12.11"
 
 organization := "com.github.xuwei-k"
 
@@ -14,7 +14,7 @@ val tagName = Def.setting {
 }
 val tagOrHash = Def.setting {
   if (isSnapshot.value)
-    sys.process.Process("git rev-parse HEAD").lineStream_!.head
+    sys.process.Process("git rev-parse HEAD").lazyLines_!.head
   else
     tagName.value
 }
@@ -73,10 +73,10 @@ publishTo := (if (isSnapshot.value) None else localStaging.value)
 pluginCrossBuild / sbtVersion := {
   scalaBinaryVersion.value match {
     case "2.12" =>
-      (pluginCrossBuild / sbtVersion).value
+      sbt1
     case _ =>
-      sbt2
+      (pluginCrossBuild / sbtVersion).value
   }
 }
 
-crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt2)
+crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt1)
