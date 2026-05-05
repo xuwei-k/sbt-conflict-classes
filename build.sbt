@@ -37,17 +37,17 @@ homepage := Some(url("https://github.com/xuwei-k/sbt-conflict-classes"))
 
 pomExtra := (
   <developers>
-  <developer>
-    <id>xuwei-k</id>
-    <name>Kenji Yoshida</name>
-    <url>https://github.com/xuwei-k</url>
-  </developer>
-</developers>
-<scm>
-  <url>git@github.com:xuwei-k/sbt-conflict-classes.git</url>
-  <connection>scm:git:git@github.com:xuwei-k/sbt-conflict-classes.git</connection>
-  <tag>{tagOrHash.value}</tag>
-</scm>
+    <developer>
+      <id>xuwei-k</id>
+      <name>Kenji Yoshida</name>
+      <url>https://github.com/xuwei-k</url>
+    </developer>
+  </developers>
+  <scm>
+    <url>git@github.com:xuwei-k/sbt-conflict-classes.git</url>
+    <connection>scm:git:git@github.com:xuwei-k/sbt-conflict-classes.git</connection>
+    <tag>{tagOrHash.value}</tag>
+  </scm>
 )
 
 import ReleaseTransformations._
