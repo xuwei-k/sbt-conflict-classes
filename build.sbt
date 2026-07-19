@@ -31,9 +31,9 @@ Compile / doc / scalacOptions ++= {
   )
 }
 
-licenses := Seq("MIT" -> url("https://github.com/xuwei-k/sbt-conflict-classes/blob/master/LICENSE"))
+licenses := Seq("MIT" -> uri("https://github.com/xuwei-k/sbt-conflict-classes/blob/master/LICENSE"))
 
-homepage := Some(url("https://github.com/xuwei-k/sbt-conflict-classes"))
+homepage := Some(uri("https://github.com/xuwei-k/sbt-conflict-classes"))
 
 pomExtra := (
   <developers>
