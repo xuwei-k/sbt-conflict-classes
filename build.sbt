@@ -1,4 +1,4 @@
-def sbt1 = "1.12.15"
+def sbt1 = "1.13.0"
 
 organization := "com.github.xuwei-k"
 
