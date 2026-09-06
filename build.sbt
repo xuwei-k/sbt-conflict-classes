@@ -31,7 +31,7 @@ Compile / doc / scalacOptions ++= {
   )
 }
 
-licenses := Seq("MIT" -> uri("https://github.com/xuwei-k/sbt-conflict-classes/blob/master/LICENSE"))
+licenses := Seq("MIT" -> uri("https://opensource.org/license/MIT"))
 
 homepage := Some(uri("https://github.com/xuwei-k/sbt-conflict-classes"))
 
